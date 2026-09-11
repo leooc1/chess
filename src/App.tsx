@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import initializeChessboard from "./utils/initializeChessboard";
+
 function App() {
   const chessPositions = [
     ["A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"],
@@ -10,10 +13,14 @@ function App() {
     ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1"],
   ];
 
+  useEffect(() => {
+    initializeChessboard();
+  }, []);
+
   return (
     <>
       <main className="w-screen min-h-screen flex justify-center items-center">
-        <section className="grid grid-cols-8 w-200 border-2 border-[#895129] outline-24 outline-[#EAD6B3]">
+        <section className="grid grid-cols-8 w-130 h-130 border-2 border-[#895129] outline-24 outline-[#EAD6B3]">
           {chessPositions.map((row, rowIndex, array) =>
             row.map((position, colIndex) => {
               const isEvenRow = rowIndex % 2 === 0;
@@ -22,7 +29,7 @@ function App() {
                   key={position}
                   id={position}
                   className={`chess-position flex justify-center items-center font-bold
-                    ${(colIndex == 0 || rowIndex + 1 == array.length) && "relative"} 
+                    ${colIndex == 0 || rowIndex + 1 == array.length ? "relative" : ""} 
                     ${
                       isEvenRow
                         ? "even:text-white odd:text-black even:bg-[#895129] odd:bg-[#EAD6B3]"
@@ -39,6 +46,7 @@ function App() {
                       {position.charAt(0)}
                     </span>
                   )}
+                  {/*  */}
                 </div>
               );
             }),
