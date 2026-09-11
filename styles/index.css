@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+.chess-position {
+  animation: pop-in 0.2s ease both;
+  animation-delay: calc(sibling-index() * 0.05s);
+}
+
+@keyframes pop-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
