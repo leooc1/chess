@@ -1,6 +1,6 @@
 import bQueen from "../../../assets/pieces/b-queen.svg";
 import wQueen from "../../../assets/pieces/w-queen.svg";
-import type { Color, Position } from "../../types/types";
+import type { Color, Position, VerifyPosition } from "../../types/types";
 import { Piece } from "../Piece";
 import { Bishop } from "./Bishop";
 import { Rook } from "./Rook";
@@ -15,18 +15,18 @@ export class Queen extends Piece {
     );
   }
 
-  possibleMovements(): Position[] {
+  possibleMovements(all_piece_position: VerifyPosition[]): Position[] {
     if (this.possible_movements.length > 0) {
       this.possible_movements = [];
     } else {
       const bishopMovements = new Bishop(
         this.color,
         this.position,
-      ).possibleMovements();
+      ).possibleMovements(all_piece_position);
       const rookMovements = new Rook(
         this.color,
         this.position,
-      ).possibleMovements();
+      ).possibleMovements(all_piece_position);
       this.possible_movements = bishopMovements.concat(rookMovements);
     }
     return this.possible_movements;

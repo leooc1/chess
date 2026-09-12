@@ -1,6 +1,6 @@
 import bBishop from "../../../assets/pieces/b-bishop.svg";
 import wBishop from "../../../assets/pieces/w-bishop.svg";
-import type { Color, Position } from "../../types/types";
+import type { Color, Position, VerifyPosition } from "../../types/types";
 import { Piece } from "../Piece";
 
 export class Bishop extends Piece {
@@ -13,7 +13,7 @@ export class Bishop extends Piece {
     );
   }
 
-  possibleMovements(): Position[] {
+  possibleMovements(all_piece_position: VerifyPosition[]): Position[] {
     if (this.possible_movements.length > 0) {
       this.possible_movements = [];
     } else {
@@ -21,19 +21,35 @@ export class Bishop extends Piece {
       {
         let [x, y] = this.position;
         while (--x >= 0 && x <= 7 && --y >= 0 && y <= 7) {
-          this.possible_movements.push([x, y]);
+          if (super.positionCollision([x, y], all_piece_position)) {
+            break;
+          } else {
+            this.possible_movements.push([x, y]);
+          }
         }
         [x, y] = this.position;
         while (--x >= 0 && x <= 7 && ++y >= 0 && y <= 7) {
-          this.possible_movements.push([x, y]);
+          if (super.positionCollision([x, y], all_piece_position)) {
+            break;
+          } else {
+            this.possible_movements.push([x, y]);
+          }
         }
         [x, y] = this.position;
         while (++x >= 0 && x <= 7 && --y >= 0 && y <= 7) {
-          this.possible_movements.push([x, y]);
+          if (super.positionCollision([x, y], all_piece_position)) {
+            break;
+          } else {
+            this.possible_movements.push([x, y]);
+          }
         }
         [x, y] = this.position;
         while (++x >= 0 && x <= 7 && ++y >= 0 && y <= 7) {
-          this.possible_movements.push([x, y]);
+          if (super.positionCollision([x, y], all_piece_position)) {
+            break;
+          } else {
+            this.possible_movements.push([x, y]);
+          }
         }
       }
     }

@@ -1,6 +1,6 @@
 import bKnight from "../../../assets/pieces/b-knight.svg";
 import wKnight from "../../../assets/pieces/w-knight.svg";
-import type { Color, Position } from "../../types/types";
+import type { Color, Position, VerifyPosition } from "../../types/types";
 import { Piece } from "../Piece";
 
 function moveLY(positon: Position): Position[] {
@@ -29,7 +29,7 @@ export class Knight extends Piece {
     );
   }
 
-  possibleMovements(): Position[] {
+  possibleMovements(all_piece_position: VerifyPosition[]): Position[] {
     if (this.possible_movements.length > 0) {
       this.possible_movements = [];
     } else {
@@ -39,7 +39,10 @@ export class Knight extends Piece {
       const mvX = moveLX(this.position).filter(
         (pm) => pm[0] >= 0 && pm[0] <= 7 && pm[1] >= 0 && pm[1] <= 7,
       );
-      this.possible_movements = [...mvY, ...mvX];
+      [...mvY, ...mvX].forEach((p) => {
+        if (!super.positionCollision(p, all_piece_position))
+          this.possible_movements.push(p);
+      });
     }
     return this.possible_movements;
   }

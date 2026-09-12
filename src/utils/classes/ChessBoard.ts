@@ -52,14 +52,19 @@ export class ChessBoard {
                 p.getPosition()[1] == colIndex,
             );
             if (piece) {
-              piece.possibleMovements();
+              piece.possibleMovements(
+                this.pieces.map((p) => ({
+                  color: p.getColor(),
+                  position: p.getPosition(),
+                })),
+              );
               const otherPieces = this.pieces.filter(
                 (p) =>
                   p.getPosition()[0] != piece.getPosition()[0] ||
                   p.getPosition()[1] != piece.getPosition()[1],
               );
               otherPieces.forEach((op) => {
-                op.possible_movements = [];
+                op.setPossibleMovements([]);
               });
             }
             this.markPossibleMovements();
@@ -75,7 +80,7 @@ export class ChessBoard {
       e.remove();
     });
     this.pieces
-      .map((p) => p.possible_movements)
+      .map((p) => p.getPossibleMovements())
       .forEach((pm) => {
         pm.forEach((p) => {
           this.positions[p[0]][p[1]].insertAdjacentHTML(
