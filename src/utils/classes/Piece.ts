@@ -5,6 +5,7 @@ export class Piece {
   protected initial_position: Position;
   protected position: Position;
   protected image: string;
+  possible_movements: Position[];
 
   constructor(
     color: Color,
@@ -16,6 +17,7 @@ export class Piece {
     this.position = position;
     this.initial_position = initial_position;
     this.image = image;
+    this.possible_movements = [];
   }
 
   getPosition() {
@@ -24,5 +26,9 @@ export class Piece {
 
   getImage() {
     return this.image;
+  }
+
+  possibleMovements(): Position[] {
+    return [];
   }
 }

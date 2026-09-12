@@ -12,4 +12,31 @@ export class Rook extends Piece {
       color == "white" ? wRook : bRook,
     );
   }
+
+  possibleMovements(): Position[] {
+    if (this.possible_movements.length > 0) {
+      this.possible_movements = [];
+    } else {
+      this.possible_movements = [];
+      {
+        let [x, y] = this.position;
+        while (--x >= 0) {
+          this.possible_movements.push([x, y]);
+        }
+        [x, y] = this.position;
+        while (++x <= 7) {
+          this.possible_movements.push([x, y]);
+        }
+        [x, y] = this.position;
+        while (--y >= 0) {
+          this.possible_movements.push([x, y]);
+        }
+        [x, y] = this.position;
+        while (++y <= 7) {
+          this.possible_movements.push([x, y]);
+        }
+      }
+    }
+    return this.possible_movements;
+  }
 }

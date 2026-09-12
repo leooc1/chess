@@ -12,4 +12,13 @@ export class Knight extends Piece {
       color == "white" ? wKnight : bKnight,
     );
   }
+
+  possibleMovements(): Position[] {
+    if (this.possible_movements.length > 0) {
+      this.possible_movements = [];
+    } else {
+      this.possible_movements = [this.position];
+    }
+    return this.possible_movements;
+  }
 }

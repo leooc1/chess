@@ -12,4 +12,48 @@ export class Pawn extends Piece {
       color == "white" ? wPawn : bPawn,
     );
   }
+
+  possibleMovements(): Position[] {
+    if (this.possible_movements.length > 0) {
+      this.possible_movements = [];
+    } else {
+      this.possible_movements = [];
+      if (this.color == "white") {
+        if (this.position[0] == 6) {
+          this.possible_movements.push([
+            this.position[0] - 1,
+            this.position[1],
+          ]);
+          this.possible_movements.push([
+            this.position[0] - 2,
+            this.position[1],
+          ]);
+        } else {
+          if (this.position[0] - 1 >= 0)
+            this.possible_movements.push([
+              this.position[0] - 1,
+              this.position[1],
+            ]);
+        }
+      } else {
+        if (this.position[0] == 1) {
+          this.possible_movements.push([
+            this.position[0] + 1,
+            this.position[1],
+          ]);
+          this.possible_movements.push([
+            this.position[0] + 2,
+            this.position[1],
+          ]);
+        } else {
+          if (this.position[0] + 1 <= 7)
+            this.possible_movements.push([
+              this.position[0] + 1,
+              this.position[1],
+            ]);
+        }
+      }
+    }
+    return this.possible_movements;
+  }
 }
