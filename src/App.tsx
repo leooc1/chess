@@ -37,12 +37,12 @@ function App() {
                     }`}
                 >
                   {colIndex == 0 && (
-                    <span className="absolute text-black -left-4">
+                    <span className="position-notation absolute text-black -left-4">
                       {position.charAt(1)}
                     </span>
                   )}
                   {rowIndex + 1 == array.length && (
-                    <span className="absolute text-black -bottom-6">
+                    <span className="position-notation absolute text-black -bottom-6">
                       {position.charAt(0)}
                     </span>
                   )}
