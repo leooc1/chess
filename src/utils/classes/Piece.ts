@@ -60,7 +60,21 @@ export class Piece {
     else return { found: false };
   }
 
+  inChessBoard(position: Position) {
+    if (
+      position[0] >= 0 &&
+      position[0] <= 7 &&
+      position[1] >= 0 &&
+      position[1] <= 7
+    )
+      return true;
+    return false;
+  }
+
   positionCollision(position: Position, all_piece_position: VerifyPosition[]) {
+    if (!this.inChessBoard(position)) {
+      return false;
+    }
     if (this.verifyPosition(position, all_piece_position).found) {
       if (
         (this.verifyPosition(position, all_piece_position).color as Color) ==
