@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .chess-position {
-  animation: pop-in 0.2s ease both;
+  animation: pop-in 0.1s ease both;
   animation-delay: calc(sibling-index() * 0.05s);
 }
 

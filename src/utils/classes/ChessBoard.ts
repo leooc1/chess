@@ -1,3 +1,4 @@
+import type { Color, LogMovement, Position } from "../types/types";
 import type { Piece } from "./Piece";
 import { Bishop } from "./pieces/Bishop";
 import { King } from "./pieces/King";
@@ -9,10 +10,14 @@ import { Rook } from "./pieces/Rook";
 export class ChessBoard {
   positions: Element[][];
   pieces: Piece[];
+  movement_round: Color;
+  onMovementCallback?: (movement: LogMovement) => void;
   constructor(position: Element[][]) {
     this.positions = position;
     this.pieces = [];
+    this.movement_round = "white";
   }
+
   clear() {
     this.positions.forEach((rows) => {
       rows.forEach((cp) => {
@@ -50,7 +55,8 @@ export class ChessBoard {
             const piece = this.pieces.find(
               (p) =>
                 p.getPosition()[0] == rowIndex &&
-                p.getPosition()[1] == colIndex,
+                p.getPosition()[1] == colIndex &&
+                p.getColor() == this.movement_round,
             );
             if (piece) {
               piece.possibleMovements(
@@ -116,23 +122,40 @@ export class ChessBoard {
               pm[1] == Number(id.charAt(0).charCodeAt(0) - 65),
           ).length > 0,
     );
-    const deadPiece = this.pieces.find(
-      (p) =>
-        p.getPosition()[0] == 8 - Number(id.charAt(1)) &&
-        p.getPosition()[1] == Number(id.charAt(0).charCodeAt(0) - 65),
-    );
-    // console.log(deadPiece)
-    deadPiece?.die();
-    piece?.setPossibleMovements([]);
-    this.markPossibleMovements();
-    piece?.moteTo([
+    const to: Position = [
       8 - Number(id.charAt(1)),
       Number(id.charAt(0).charCodeAt(0) - 65),
-    ]);
+    ];
+    const deadPiece = this.pieces.find(
+      (p) => p.getPosition()[0] == to[0] && p.getPosition()[1] == to[1],
+    );
+    if (piece) {
+      const from = piece.getPosition();
+      deadPiece?.die();
+      piece.setPossibleMovements([]);
+      this.markPossibleMovements();
+      piece.moteTo(to);
+      this.onMovementCallback?.({
+        piece: piece.constructor.name,
+        color: piece.getColor(),
+        from,
+        to,
+        type: deadPiece ? "killed" : "move",
+      });
+      if (deadPiece) {
+        this.onMovementCallback?.({
+          piece: deadPiece.constructor.name,
+          color: deadPiece.getColor(),
+          from: to,
+          to: deadPiece.getPosition(),
+          type: "died",
+        });
+      }
+    }
     this.reload();
   }
 
-  initialize() {
+  set() {
     // black
     {
       this.pieces.push(new Rook("black", [0, 0]));
@@ -172,5 +195,14 @@ export class ChessBoard {
       this.pieces.push(new Rook("white", [7, 7]));
     }
     this.reload();
+  }
+
+  onMovement(callback: (movement: LogMovement) => void) {
+    this.onMovementCallback = callback;
+  }
+
+  switchRound() {
+    if (this.movement_round == "white") this.movement_round = "black";
+    else this.movement_round = "white";
   }
 }

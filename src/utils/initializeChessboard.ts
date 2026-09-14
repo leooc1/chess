@@ -1,4 +1,4 @@
-import { ChessBoard } from "./classes/ChessBoard";
+import { Game } from "./classes/Game";
 
 export default function initializeChessboard() {
   const chessPositions = [...document.querySelectorAll(".chess-position")];
@@ -7,6 +7,6 @@ export default function initializeChessboard() {
     matrizChessBoard.push(chessPositions.slice(i, i + 8));
   }
 
-  const chessBoard = new ChessBoard(matrizChessBoard);
-  chessBoard.initialize();
+  const game = new Game(matrizChessBoard);
+  game.start();
 }
