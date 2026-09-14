@@ -89,4 +89,13 @@ export class Piece {
       return false;
     }
   }
+
+  moteTo(position: Position) {
+    this.position = position;
+  }
+
+  die() {
+    if (this.color == "white") this.position = [0, 8];
+    else this.position = [7, 8];
+  }
 }

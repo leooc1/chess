@@ -31,7 +31,7 @@ export class ChessBoard {
 
   reload() {
     this.clear();
-    for (const piece of this.pieces) {
+    for (const piece of this.filterAlivePieces(this.pieces)) {
       this.positions[piece.getPosition()[0]][
         piece.getPosition()[1]
       ].insertAdjacentHTML(
@@ -41,6 +41,7 @@ export class ChessBoard {
       </div>`,
       );
     }
+
     // posiçoes para se mover
     this.positions.forEach((row, rowIndex) => {
       row.forEach((col, colIndex) => {
@@ -74,9 +75,13 @@ export class ChessBoard {
     });
   }
 
+  filterAlivePieces(pieces: Piece[]) {
+    return pieces.filter((p) => p.getPosition()[1] != 8);
+  }
+
   markPossibleMovements() {
-    const pmElements = document.querySelectorAll(".possible-movement");
-    pmElements.forEach((e) => {
+    const pmElementsRemove = document.querySelectorAll(".possible-movement");
+    pmElementsRemove.forEach((e) => {
       e.remove();
     });
     this.pieces
@@ -91,6 +96,40 @@ export class ChessBoard {
           );
         });
       });
+    // onclick nas posiçoes para se mover
+    const pmElements = document.querySelectorAll(".possible-movement");
+    pmElements.forEach((e) => {
+      e.addEventListener("click", () => {
+        this.movementTo((e.parentElement as Element).id);
+      });
+    });
+  }
+
+  movementTo(id: string) {
+    const piece = this.pieces.find(
+      (p) =>
+        p
+          .getPossibleMovements()
+          .filter(
+            (pm) =>
+              pm[0] == 8 - Number(id.charAt(1)) &&
+              pm[1] == Number(id.charAt(0).charCodeAt(0) - 65),
+          ).length > 0,
+    );
+    const deadPiece = this.pieces.find(
+      (p) =>
+        p.getPosition()[0] == 8 - Number(id.charAt(1)) &&
+        p.getPosition()[1] == Number(id.charAt(0).charCodeAt(0) - 65),
+    );
+    // console.log(deadPiece)
+    deadPiece?.die();
+    piece?.setPossibleMovements([]);
+    this.markPossibleMovements();
+    piece?.moteTo([
+      8 - Number(id.charAt(1)),
+      Number(id.charAt(0).charCodeAt(0) - 65),
+    ]);
+    this.reload();
   }
 
   initialize() {
