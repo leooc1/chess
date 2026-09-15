@@ -20,37 +20,39 @@ function App() {
   return (
     <>
       <main className="w-screen min-h-screen flex justify-center items-center">
-        <section className="grid grid-cols-8 w-130 h-130 border-2 border-[#895129] outline-24 outline-[#EAD6B3]">
-          {chessPositions.map((row, rowIndex, array) =>
-            row.map((position, colIndex) => {
-              const isEvenRow = rowIndex % 2 === 0;
-              return (
-                <div
-                  key={position}
-                  id={position}
-                  className={`chess-position flex justify-center items-center font-bold
+        <section className="chessboard transition-all grid grid-cols-8 2xl:chessboard-size-xl lg:chessboard-size-lg w-[80vw] h-[80vw] border-2 border-[#895129] outline-24 outline-[#EAD6B3]">
+          {
+            chessPositions.map((row, rowIndex, array) =>
+              row.map((position, colIndex) => {
+                const isEvenRow = rowIndex % 2 === 0;
+                return (
+                  <div
+                    key={position}
+                    id={position}
+                    className={`chess-position flex justify-center items-center font-bold
                     ${colIndex == 0 || rowIndex + 1 == array.length ? "relative" : ""} 
                     ${
                       isEvenRow
                         ? "even:text-white odd:text-black even:bg-[#895129] odd:bg-[#EAD6B3]"
                         : "odd:text-white even:text-black odd:bg-[#895129] even:bg-[#EAD6B3]"
                     }`}
-                >
-                  {colIndex == 0 && (
-                    <span className="position-notation absolute text-black -left-4">
-                      {position.charAt(1)}
-                    </span>
-                  )}
-                  {rowIndex + 1 == array.length && (
-                    <span className="position-notation absolute text-black -bottom-6">
-                      {position.charAt(0)}
-                    </span>
-                  )}
-                  {/*  */}
-                </div>
-              );
-            }),
-          )}
+                  >
+                    {colIndex == 0 && (
+                      <span className="position-notation transition-all absolute text-black -left-4">
+                        {position.charAt(1)}
+                      </span>
+                    )}
+                    {rowIndex + 1 == array.length && (
+                      <span className="position-notation transition-all absolute text-black -bottom-6">
+                        {position.charAt(0)}
+                      </span>
+                    )}
+                    {/*  */}
+                  </div>
+                );
+              }),
+            )
+          }
         </section>
       </main>
     </>

@@ -14,8 +14,21 @@ export class Game {
     this.chessboard.set();
   }
 
+  end() {}
+
+  haveWinner(movimento: LogMovement): Boolean {
+    if (movimento.piece == "King" && movimento.type == "died") {
+      return true;
+    } else return false;
+  }
+
   playerMove(movimento: LogMovement) {
     this.historicoMovimentacoes.push(movimento);
+    if (this.haveWinner(movimento))
+      alert(
+        `Jogados das peças ${movimento.color == "black" ? "brancas" : "pretas"} ganhou!!`,
+      );
+
     if (movimento.type != "died") this.chessboard.switchRound();
     console.log(this.historicoMovimentacoes);
   }

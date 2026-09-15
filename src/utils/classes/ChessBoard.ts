@@ -42,7 +42,7 @@ export class ChessBoard {
       ].insertAdjacentHTML(
         "beforeend",
         `<div class="piece-position absolute w-full h-full flex justify-center items-center cursor-grab">
-      <img class="piece-image" src="${piece.getImage()}" />
+      <img class="piece-image transition-all ${this.movement_round == "black" ? "rotate-180" : ""}" src="${piece.getImage()}" />
       </div>`,
       );
     }
@@ -165,8 +165,17 @@ export class ChessBoard {
   }
 
   switchRound() {
-    if (this.movement_round == "white") this.movement_round = "black";
-    else this.movement_round = "white";
+    const chessboard = document.querySelector(".chessboard");
+    const indicators = document.querySelectorAll(".position-notation");
+    if (this.movement_round == "white") {
+      this.movement_round = "black";
+      chessboard?.classList.add("rotate-180");
+      indicators.forEach((e) => e.classList.add("rotate-180"));
+    } else {
+      this.movement_round = "white";
+      chessboard?.classList.remove("rotate-180");
+      indicators.forEach((e) => e.classList.remove("rotate-180"));
+    }
   }
 
   set() {
