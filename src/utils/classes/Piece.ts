@@ -40,6 +40,7 @@ export class Piece {
   getPossibleMovements() {
     return this.possible_movements;
   }
+  
   setPossibleMovements(possible_movements: Position[]) {
     return (this.possible_movements = possible_movements);
   }

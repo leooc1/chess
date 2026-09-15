@@ -8,9 +8,9 @@ import { Queen } from "./pieces/Queen";
 import { Rook } from "./pieces/Rook";
 
 export class ChessBoard {
-  positions: Element[][];
-  pieces: Piece[];
-  movement_round: Color;
+  protected positions: Element[][];
+  protected pieces: Piece[];
+  protected movement_round: Color;
   onMovementCallback?: (movement: LogMovement) => void;
   constructor(position: Element[][]) {
     this.positions = position;
@@ -59,6 +59,11 @@ export class ChessBoard {
                 p.getColor() == this.movement_round,
             );
             if (piece) {
+              if (piece instanceof King) {
+                piece.canQueenSideCastling(this.pieces);
+                piece.canKingSideCastling(this.pieces);
+              }
+
               piece.possibleMovements(
                 this.pieces.map((p) => ({
                   color: p.getColor(),
@@ -155,6 +160,15 @@ export class ChessBoard {
     this.reload();
   }
 
+  onMovement(callback: (movement: LogMovement) => void) {
+    this.onMovementCallback = callback;
+  }
+
+  switchRound() {
+    if (this.movement_round == "white") this.movement_round = "black";
+    else this.movement_round = "white";
+  }
+
   set() {
     // black
     {
@@ -186,23 +200,14 @@ export class ChessBoard {
       this.pieces.push(new Pawn("white", [6, 6]));
       this.pieces.push(new Pawn("white", [6, 7]));
       this.pieces.push(new Rook("white", [7, 0]));
-      this.pieces.push(new Knight("white", [7, 1]));
-      this.pieces.push(new Bishop("white", [7, 2]));
-      this.pieces.push(new Queen("white"));
+      // this.pieces.push(new Knight("white", [7, 1]));
+      // this.pieces.push(new Bishop("white", [7, 2]));
+      // this.pieces.push(new Queen("white"));
       this.pieces.push(new King("white"));
-      this.pieces.push(new Bishop("white", [7, 5]));
-      this.pieces.push(new Knight("white", [7, 6]));
+      // this.pieces.push(new Bishop("white", [7, 5]));
+      // this.pieces.push(new Knight("white", [7, 6]));
       this.pieces.push(new Rook("white", [7, 7]));
     }
     this.reload();
-  }
-
-  onMovement(callback: (movement: LogMovement) => void) {
-    this.onMovementCallback = callback;
-  }
-
-  switchRound() {
-    if (this.movement_round == "white") this.movement_round = "black";
-    else this.movement_round = "white";
   }
 }

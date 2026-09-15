@@ -4,6 +4,7 @@ import type { Color, Position, VerifyPosition } from "../../types/types";
 import { Piece } from "../Piece";
 
 export class Rook extends Piece {
+  protected moved: Boolean;
   constructor(color: Color, initial_position: Position) {
     super(
       color,
@@ -11,6 +12,12 @@ export class Rook extends Piece {
       initial_position,
       color == "white" ? wRook : bRook,
     );
+    this.moved = false;
+  }
+
+  moteTo(position: Position) {
+    this.position = position;
+    this.moved = true;
   }
 
   possibleMovements(all_piece_position: VerifyPosition[]): Position[] {
@@ -54,5 +61,9 @@ export class Rook extends Piece {
       }
     }
     return this.possible_movements;
+  }
+
+  firstMove(): Boolean {
+    return this.moved == false;
   }
 }

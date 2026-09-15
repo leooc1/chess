@@ -2,8 +2,8 @@ import type { LogMovement } from "../types/types";
 import { ChessBoard } from "./ChessBoard";
 
 export class Game {
-  private historicoMovimentacoes: LogMovement[];
-  private chessboard: ChessBoard;
+  protected historicoMovimentacoes: LogMovement[];
+  protected chessboard: ChessBoard;
   constructor(position_elements: Element[][]) {
     this.historicoMovimentacoes = [];
     this.chessboard = new ChessBoard(position_elements);
