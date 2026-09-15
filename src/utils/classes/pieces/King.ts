@@ -107,10 +107,13 @@ export class King extends Piece {
         ) {
           if (this.rookFirstMove([this.position[0], i], all_pieces)) {
             this.queenside_castling = true;
-            return true;
+          } else {
+            this.queenside_castling = false;
+            return false;
           }
         }
       }
+      return true;
     }
     this.queenside_castling = false;
     this.queenside_rook = null;
@@ -131,10 +134,13 @@ export class King extends Piece {
         ) {
           if (this.rookFirstMove([this.position[0], i], all_pieces)) {
             this.kingside_castling = true;
-            return true;
+          } else {
+            this.kingside_castling = false;
+            return false;
           }
         }
       }
+      return true;
     }
     this.kingside_castling = false;
     this.kingside_rook = null;
