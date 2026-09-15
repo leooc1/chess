@@ -200,12 +200,12 @@ export class ChessBoard {
       this.pieces.push(new Pawn("white", [6, 6]));
       this.pieces.push(new Pawn("white", [6, 7]));
       this.pieces.push(new Rook("white", [7, 0]));
-      // this.pieces.push(new Knight("white", [7, 1]));
-      // this.pieces.push(new Bishop("white", [7, 2]));
-      // this.pieces.push(new Queen("white"));
+      this.pieces.push(new Knight("white", [7, 1]));
+      this.pieces.push(new Bishop("white", [7, 2]));
+      this.pieces.push(new Queen("white"));
       this.pieces.push(new King("white"));
-      // this.pieces.push(new Bishop("white", [7, 5]));
-      // this.pieces.push(new Knight("white", [7, 6]));
+      this.pieces.push(new Bishop("white", [7, 5]));
+      this.pieces.push(new Knight("white", [7, 6]));
       this.pieces.push(new Rook("white", [7, 7]));
     }
     this.reload();
