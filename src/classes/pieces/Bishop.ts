@@ -1,5 +1,5 @@
-import bBishop from "../../../assets/pieces/b-bishop.svg";
-import wBishop from "../../../assets/pieces/w-bishop.svg";
+import bBishop from "../../assets/pieces/b-bishop.svg";
+import wBishop from "../../assets/pieces/w-bishop.svg";
 import type { Color, Position, VerifyPosition } from "../../types/types";
 import { Piece } from "../Piece";
 

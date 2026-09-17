@@ -1,5 +1,5 @@
-import bKnight from "../../../assets/pieces/b-knight.svg";
-import wKnight from "../../../assets/pieces/w-knight.svg";
+import bKnight from "../../assets/pieces/b-knight.svg";
+import wKnight from "../../assets/pieces/w-knight.svg";
 import type { Color, Position, VerifyPosition } from "../../types/types";
 import { Piece } from "../Piece";
 

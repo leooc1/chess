@@ -1,5 +1,5 @@
-import bPawn from "../../../assets/pieces/b-pawn.svg";
-import wPawn from "../../../assets/pieces/w-pawn.svg";
+import bPawn from "../../assets/pieces/b-pawn.svg";
+import wPawn from "../../assets/pieces/w-pawn.svg";
 import type { Color, Position, VerifyPosition } from "../../types/types";
 import { Piece } from "../Piece";
 

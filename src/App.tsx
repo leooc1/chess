@@ -1,5 +1,6 @@
-import { useEffect } from "react";
-import initializeChessboard from "./utils/initializeChessboard";
+import { useEffect, useState } from "react";
+import { Game } from "./classes/Game";
+import ChessBoard from "./components/ChessBoard";
 
 function App() {
   const chessPositions = [
@@ -13,47 +14,67 @@ function App() {
     ["A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1"],
   ];
 
+  const [game, setGame] = useState<Game>();
+  const soundBoard = new AudioContext();
+
+  function playTileSound(index: number, delay = 0) {
+    const oscillator = soundBoard.createOscillator();
+    const gain = soundBoard.createGain();
+    const filter = soundBoard.createBiquadFilter();
+
+    filter.type = "lowpass";
+    oscillator.type = "sine";
+    oscillator.frequency.value = 220 + index * 12;
+
+    const startAt = soundBoard.currentTime + delay;
+
+    gain.gain.setValueAtTime(0.0001, startAt);
+    gain.gain.exponentialRampToValueAtTime(0.12, startAt + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startAt + 0.28);
+
+    oscillator.connect(filter);
+    filter.connect(gain);
+    gain.connect(soundBoard.destination);
+
+    oscillator.start(startAt);
+    oscillator.stop(startAt + 0.3);
+  }
+
+  function initializeGame() {
+    const chessPositions = [...document.querySelectorAll(".chess-position")];
+    const matrizChessBoard = [];
+
+    for (let i = 0; i < chessPositions.length; i += 8) {
+      matrizChessBoard.push(chessPositions.slice(i, i + 8));
+    }
+
+    const triggerCascade = () => {
+      if (soundBoard.state === "suspended") {
+        soundBoard.resume();
+      }
+
+      chessPositions.forEach((_, index) => {
+        const delayMs = index * 45;
+        setTimeout(() => {
+          playTileSound(index, 0.01);
+        }, delayMs);
+      });
+    };
+
+    window.addEventListener("pointerdown", triggerCascade, { once: true });
+
+    const game = new Game(matrizChessBoard);
+    game.start();
+  }
+
   useEffect(() => {
-    initializeChessboard();
+    initializeGame();
   }, []);
 
   return (
     <>
-      <main className="w-screen min-h-screen flex justify-center items-center">
-        <section className="chessboard transition-all grid grid-cols-8 2xl:chessboard-size-xl lg:chessboard-size-lg w-[80vw] h-[80vw] border-2 border-[#895129] outline-24 outline-[#EAD6B3]">
-          {
-            chessPositions.map((row, rowIndex, array) =>
-              row.map((position, colIndex) => {
-                const isEvenRow = rowIndex % 2 === 0;
-                return (
-                  <div
-                    key={position}
-                    id={position}
-                    className={`chess-position flex justify-center items-center font-bold
-                    ${colIndex == 0 || rowIndex + 1 == array.length ? "relative" : ""} 
-                    ${
-                      isEvenRow
-                        ? "even:text-white odd:text-black even:bg-[#895129] odd:bg-[#EAD6B3]"
-                        : "odd:text-white even:text-black odd:bg-[#895129] even:bg-[#EAD6B3]"
-                    }`}
-                  >
-                    {colIndex == 0 && (
-                      <span className="position-notation transition-all absolute text-black -left-4">
-                        {position.charAt(1)}
-                      </span>
-                    )}
-                    {rowIndex + 1 == array.length && (
-                      <span className="position-notation transition-all absolute text-black -bottom-6">
-                        {position.charAt(0)}
-                      </span>
-                    )}
-                    {/*  */}
-                  </div>
-                );
-              }),
-            )
-          }
-        </section>
+      <main className="w-screen min-h-screen flex justify-center items-center bg-slate-700 relative">
+        <ChessBoard chessPositions={chessPositions} />
       </main>
     </>
   );

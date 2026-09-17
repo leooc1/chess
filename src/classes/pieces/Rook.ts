@@ -1,5 +1,5 @@
-import bRook from "../../../assets/pieces/b-rook.svg";
-import wRook from "../../../assets/pieces/w-rook.svg";
+import bRook from "../../assets/pieces/b-rook.svg";
+import wRook from "../../assets/pieces/w-rook.svg";
 import type { Color, Position, VerifyPosition } from "../../types/types";
 import { Piece } from "../Piece";
 

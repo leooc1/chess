@@ -1,5 +1,5 @@
-import bKing from "../../../assets/pieces/b-king.svg";
-import wKing from "../../../assets/pieces/w-king.svg";
+import bKing from "../../assets/pieces/b-king.svg";
+import wKing from "../../assets/pieces/w-king.svg";
 import type { Color, Position, VerifyPosition } from "../../types/types";
 import { Piece } from "../Piece";
 import { Rook } from "./Rook";

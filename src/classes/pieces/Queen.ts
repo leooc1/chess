@@ -1,5 +1,5 @@
-import bQueen from "../../../assets/pieces/b-queen.svg";
-import wQueen from "../../../assets/pieces/w-queen.svg";
+import bQueen from "../../assets/pieces/b-queen.svg";
+import wQueen from "../../assets/pieces/w-queen.svg";
 import type { Color, Position, VerifyPosition } from "../../types/types";
 import { Piece } from "../Piece";
 import { Bishop } from "./Bishop";
