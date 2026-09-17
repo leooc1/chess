@@ -1,9 +1,15 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 .chess-position {
   animation: pop-in 0.1s ease both;
   animation-delay: calc(sibling-index() * 0.05s);
 }
+
+/* .piece-position {
+  animation: pop-in 1s ease both;
+  animation-delay: calc(sibling-index() * 0.05s);
+} */
 
 @keyframes pop-in {
   0% {
@@ -18,14 +24,4 @@
     transform: scale(1);
     opacity: 1;
   }
-}
-
-@utility chessboard-size-xl{
-  width: 750px;
-  height: 750px;
-}
-
-@utility chessboard-size-lg{
-  width: 500px;
-  height: 500px;
 }
